@@ -1,28 +1,47 @@
 module.exports = {
 	prompts: [{
 		name: 'project_name',
-		message: 'Project name?',
+		message: 'Project name:',
 		validate: (input) => /^[a-z0-9\-]+$/.test(input) ? true : 'Must be a dash-case-name'
 	}, {
+		type: 'emoji',
+		name: 'project_emoji',
+		message: 'Project emoji:'
+	}, {
 		name: 'project_repository',
-		message: 'Project repository?'
+		message: 'Project repository:'
 	}, {
 		name: 'author_name',
-		message: 'Author Name?',
+		message: 'Author Name:',
 	}, {
 		name: 'author_email',
-		message: 'Author Email?',
+		message: 'Author Email:',
 		validate: (input) => /^[^@]+@[^.]+\..+$/.test(input) ? true : 'Please enter a valid email address'
 	}],
 	updatePolicies: [{
-		type: 'ignore',
-		includeFileContent: '.gitignore',
-		files: [
+		patternFromFile: '.gitignore',
+		pattern: [
 			'yarn.lock',
 			'CHANGELOG.md'
-		]
+		],
+		action: 'ignore'
+	}, {
+		pattern: '.plopifyrc.json',
+		action: 'accept'
+	}, {
+		pattern: 'README.md',
+		type: 'modified',
+		action: 'ask',
+		granularity: 'blocks'
 	}],
 	hooks: {
-
+		postGenerate: [
+			'git init',
+			'yarn install',
+			'git commit -a -m "chore: initial project scaffolding"'
+		],
+		postUpdate: [
+			'yarn install'
+		]
 	}
 };
