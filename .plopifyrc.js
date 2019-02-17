@@ -35,9 +35,11 @@ module.exports = {
 	}],
 	hooks: {
 		postGenerate: [
-			'git init',
 			'yarn install',
-			'git commit -a -m "chore: initial project scaffolding"'
+			'git init',
+			'git add .',
+			'git commit -a -m "chore: initial project scaffolding"',
+			'plopify github-init {{project_name}}'
 		],
 		postUpdate: [
 			'yarn install'
