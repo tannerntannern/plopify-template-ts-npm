@@ -30,7 +30,6 @@ module.exports = {
 		action: 'accept'
 	}, {
 		pattern: 'README.md',
-		type: 'modified',
 		action: 'ask',
 		granularity: 'blocks'
 	}],
