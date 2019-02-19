@@ -39,7 +39,9 @@ module.exports = {
 			'git init',
 			'git add .',
 			'git commit -a -m "chore: initial project scaffolding"',
-			'plopify github-init {{project_name}}'
+			'plopify github-init {{project_name}}',
+			'git remote add origin {{project_repository}}',
+			'git push -u origin master'
 		],
 		postUpdate: [
 			'yarn install'
