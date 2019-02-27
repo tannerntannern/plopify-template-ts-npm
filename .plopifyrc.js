@@ -8,8 +8,8 @@ module.exports = {
 		name: 'project_emoji',
 		message: 'Project emoji:'
 	}, {
-		name: 'project_repository',
-		message: 'Project repository:'
+		name: 'github_username',
+		message: 'GitHub Username:'
 	}, {
 		name: 'author_name',
 		message: 'Author Name:',
@@ -22,7 +22,9 @@ module.exports = {
 		patternFromFile: '.gitignore',
 		pattern: [
 			'yarn.lock',
-			'CHANGELOG.md'
+			'CHANGELOG.md',
+			'test/**/*',
+			'src/**/*'
 		],
 		action: 'ignore'
 	}, {
@@ -39,8 +41,10 @@ module.exports = {
 			'git init',
 			'git add .',
 			'git commit -a -m "chore: initial project scaffolding"',
-			'plopify github-init {{project_name}}',
-			'git remote add origin {{project_repository}}',
+			'plopify svc github-create {{project_name}}',
+			'git remote add origin https://github.com/{{github_username}}/{{project_name}}.git',
+			'plopify svc travis-enable {{github_username}}/{{project_name}}',
+			'plopify svc coveralls-enable {{github_username}}/{{project_name}}',
 			'git push -u origin master'
 		],
 		postUpdate: [
